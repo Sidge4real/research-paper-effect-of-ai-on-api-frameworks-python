@@ -1,4 +1,4 @@
-*.env*
+.env
 /results
 *.pyc
 __pycache__/
