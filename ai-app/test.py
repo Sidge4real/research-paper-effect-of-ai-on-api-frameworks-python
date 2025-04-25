@@ -99,7 +99,8 @@ def run_benchmark(concurrent_users=100, requests_per_user=10):
 
         if framework == 'fastapi':
             # Asynchrone benadering voor FastAPI
-            loop = asyncio.get_event_loop()
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
             futures = [loop.create_task(test_endpoint_async(framework, 'posts')) 
                       for _ in range(requests_per_user * concurrent_users)]
             
