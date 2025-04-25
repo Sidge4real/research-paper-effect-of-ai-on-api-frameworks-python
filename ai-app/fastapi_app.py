@@ -6,6 +6,8 @@ from typing import Optional
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
+import torch
+from transformers import pipeline
 
 class Post(BaseModel):
     title: str

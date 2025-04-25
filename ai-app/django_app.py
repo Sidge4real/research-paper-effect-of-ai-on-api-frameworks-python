@@ -8,7 +8,8 @@ import json
 from bson import ObjectId
 from dotenv import load_dotenv
 import os
-
+import torch
+from transformers import pipeline
 # Load environment variables
 load_dotenv()
 
