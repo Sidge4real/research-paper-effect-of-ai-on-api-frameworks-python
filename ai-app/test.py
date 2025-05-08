@@ -71,20 +71,17 @@ async def test_endpoint_async(framework, endpoint, method='GET', payload=None):
 
 # Functie voor het monitoren van de eigen Python-processen (CPU-gebruik)
 def start_process_monitor(stop_event, interval=0.5):
-    cpu_samples = []
     mem_samples = []
     process = psutil.Process()
-    process.cpu_percent(interval=None)  # warm-up
 
     def monitor():
         while not stop_event.is_set():
-            cpu_samples.append(process.cpu_percent(interval=None))
             mem_samples.append(process.memory_info().rss / (1024 * 1024))
             time.sleep(interval)
 
     thread = threading.Thread(target=monitor)
     thread.start()
-    return cpu_samples, mem_samples, thread
+    return [], mem_samples, thread
 
 # Run benchmark, aangepast voor FastAPI als asynchroon
 def run_benchmark(concurrent_users=100, requests_per_user=10):
@@ -140,7 +137,6 @@ def run_benchmark(concurrent_users=100, requests_per_user=10):
                 'min_latency_ms': round(min(latencies), 2),
                 'max_latency_ms': round(max(latencies), 2),
                 'failed_requests': failed_responses,
-                'cpu_usage_percent': round(sum(cpu_samples) / len(cpu_samples), 2),
                 'memory_usage_mb': round(sum(mem_samples) / len(mem_samples), 2),
                 'total_time': round(total_time, 2)
             }
@@ -164,7 +160,6 @@ def display_results(results):
     # Verzameling van data voor grafieken
     frameworks = ['flask', 'fastapi', 'django']
     requests_per_second = [results[framework].get('requests_per_second', 0) for framework in frameworks]
-    cpu_usage_percent = [results[framework].get('cpu_usage_percent', 0) for framework in frameworks]
     avg_latency_ms = [results[framework].get('avg_latency_ms', 0) for framework in frameworks]
     total_time = [results[framework].get('total_time', 0) for framework in frameworks]
     memory_usage_mb = [results[framework].get('memory_usage_mb', 0) for framework in frameworks]
@@ -178,9 +173,7 @@ def display_results(results):
         elif i == 2:
             print("django:")
         
-        # Zorg ervoor dat je de getallen omzet naar string
         print("req/s: " + str(requests_per_second[i]))
-        print("cpu: " + str(cpu_usage_percent[i]) + "%")
         print("latency: " + str(avg_latency_ms[i]) + "ms")
         print("total time: " + str(total_time[i]) + "s")
         print("memory: " + str(memory_usage_mb[i]) + "MB")
@@ -190,7 +183,6 @@ def display_results(results):
 
     # Sla gecombineerde grafieken op
     save_comparison_graph('Requests per second', frameworks, requests_per_second, 'requests_per_second')
-    save_comparison_graph('CPU Usage (%)', frameworks, cpu_usage_percent, 'cpu_usage')
     save_comparison_graph('Average Latency (ms)', frameworks, avg_latency_ms, 'avg_latency')
     save_comparison_graph('Total Time (s)', frameworks, total_time, 'total_time')
     save_comparison_graph('Memory Usage (MB)', frameworks, memory_usage_mb, 'memory_usage')
