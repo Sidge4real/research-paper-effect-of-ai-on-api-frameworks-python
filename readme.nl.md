@@ -13,7 +13,7 @@ Het doel is om te begrijpen:
 ## 🔬 Onderzoeksvraag
 
 **Wat is het effect van AI op API-frameworks in Python?**  
-We focussen op prestatie (latency, geheugen, CPU, requests per seconde) en ontwikkelaarsgemak bij het integreren van AI-taken zoals tekstsamenvatting of sentimentanalyse.
+We focussen op prestatie (latency, geheugen, requests per seconde) en ontwikkelaarsgemak bij het integreren van AI-taken zoals tekstsamenvatting of sentimentanalyse.
 
 ## 🧪 Vergeleken Frameworks
 
@@ -38,7 +38,6 @@ Deze functies zijn geïntegreerd met open-source modellen via [HuggingFace Trans
 
 We hebben elk framework getest met en zonder AI-functionaliteiten, met de volgende metrieken:
 - Requests per seconde
-- CPU-gebruik
 - Geheugengebruik
 - Gemiddelde latency
 - Totale looptijd onder belasting

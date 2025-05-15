@@ -13,7 +13,7 @@ The goal is to understand:
 ## 🔬 Research Question
 
 **What is the effect of AI on API frameworks in Python?**  
-We focus on performance (latency, memory, CPU, request throughput) and developer experience when integrating AI tasks such as text summarization or sentiment analysis.
+We focus on performance (latency, memory, request throughput) and developer experience when integrating AI tasks such as text summarization or sentiment analysis.
 
 ## 🧪 Benchmarked Frameworks
 
@@ -38,7 +38,6 @@ These tasks are integrated using open-source transformer models via [HuggingFace
 
 We benchmarked each framework with and without AI features using the following metrics:
 - Requests per second
-- CPU usage
 - Memory usage
 - Average latency
 - Total runtime under load
